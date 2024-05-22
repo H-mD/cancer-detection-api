@@ -2,7 +2,7 @@ const tfjs = require('@tensorflow/tfjs-node');
 const {Firestore} = require("@google-cloud/firestore");
 
 function loadModel() {
-    const modelUrl = "https://storage.googleapis.com/cancer-detection-model/submissions-model/model.json";
+    const modelUrl = "https://storage.googleapis.com/cancer-detection-model-hmd/submissions-model/model.json";
     return tfjs.loadGraphModel(modelUrl);
 }
 
@@ -39,8 +39,8 @@ async function fetch_data() {
             fetchedData.push(doc.data());
         });
         return fetchedData;
-    } catch (error) {
-        console.error('Error fetching documents: ', error);
+    } catch (err) {
+        console.log(err.message);
         return [];
     }
 }

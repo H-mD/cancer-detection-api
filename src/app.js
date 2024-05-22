@@ -12,11 +12,15 @@ class InputError extends Error {
 
 (async () => {
     const model = await loadModel();
-    console.log('model loaded!');
 
     const server = Hapi.server({
-        host: process.env.NODE_ENV !== 'production' ? '0.0.0.0': '0.0.0.0',
-        port: 3000
+        host: '0.0.0.0',
+        port: process.env.PORT,
+        routes: {
+            cors: {
+                origin: ["*"],
+            },
+        },
     });
 
     server.route([
@@ -37,7 +41,7 @@ class InputError extends Error {
 
                 createdAt = new Date().toISOString();
 
-                if (predictions[0] == 1){
+                if (predictions[0] > 0.5){
                     code = 201;
                     result = "Cancer";
                     suggestion = "Segera periksa ke dokter";
